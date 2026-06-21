@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الخان | El Khan Café</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --brown-deepest: #1a0f00;
+    --brown-deep: #2c1a00;
+    --brown-mid: #3d2400;
+    --brown-rich: #5c3600;
+    --brown-warm: #7a4a1a;
+    --gold-deep: #8b6914;
+    --gold-mid: #b8860b;
+    --gold-bright: #d4a017;
+    --gold-light: #f0c040;
+    --gold-pale: #fae8a0;
+    --cream: #fdf6e3;
+    --text-light: #faecd2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--brown-deepest);
+    font-family: 'Noto Naskh Arabic', serif;
+    color: var(--text-light);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at top, #3d2400 0%, #1a0f00 60%),
+      url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8860b' fill-opacity='0.04'%3E%3Cpath d='M40 0 L80 40 L40 80 L0 40 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ─── ORNAMENTAL BORDER ─── */
+  .page-frame {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 80px;
+    position: relative;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    padding: 48px 24px 32px;
+    position: relative;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to var(--dir, right), transparent, var(--gold-bright));
+    max-width: 200px;
+  }
+  .ornament-line.left { --dir: left; }
+
+  .ornament-diamond {
+    width: 10px; height: 10px;
+    background: var(--gold-bright);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .logo-arabic {
+    font-family: 'Amiri', serif;
+    font-size: clamp(52px, 12vw, 88px);
+    font-weight: 700;
+    color: var(--gold-bright);
+    text-shadow: 0 0 40px rgba(212, 160, 23, 0.5), 0 2px 8px rgba(0,0,0,0.8);
+    letter-spacing: 4px;
+    line-height: 1;
+    display: block;
+  }
+
+  .logo-english {
+    font-family: 'Amiri', serif;
+    font-size: clamp(14px, 3vw, 20px);
+    letter-spacing: 12px;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-top: 6px;
+    display: block;
+  }
+
+  .tagline {
+    font-size: 13px;
+    color: var(--gold-pale);
+    opacity: 0.7;
+    margin-top: 10px;
+    letter-spacing: 2px;
+  }
+
+  /* ─── CATEGORY TABS ─── */
+  .category-nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 0 4px 12px;
+    margin-bottom: 28px;
+    scrollbar-width: none;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cat-tab {
+    background: transparent;
+    border: 1px solid var(--gold-deep);
+    color: var(--gold-mid);
+    padding: 8px 18px;
+    border-radius: 2px;
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cat-tab::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .cat-tab span { position: relative; z-index: 1; }
+
+  .cat-tab:hover, .cat-tab.active {
+    color: var(--brown-deepest);
+    border-color: var(--gold-bright);
+  }
+  .cat-tab:hover::before, .cat-tab.active::before { opacity: 1; }
+
+  /* ─── SECTION HEADER ─── */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding: 0 4px;
+  }
+
+  .section-title h2 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(22px, 5vw, 30px);
+    color: var(--gold-bright);
+    font-weight: 700;
+  }
+
+  .section-title .title-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to left, transparent, var(--gold-deep));
+  }
+
+  /* ─── MENU GRID ─── */
+  .menu-section { display: none; }
+  .menu-section.visible { display: block; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  /* ─── MENU CARD ─── */
+  .menu-card {
+    background: linear-gradient(160deg, var(--brown-mid) 0%, var(--brown-deep) 100%);
+    border: 1px solid rgba(184, 134, 11, 0.25);
+    border-radius: 4px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .menu-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,160,23,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .menu-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(212, 160, 23, 0.6);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(212,160,23,0.1);
+  }
+
+  .menu-card.in-cart {
+    border-color: var(--gold-bright);
+    box-shadow: 0 0 0 1px var(--gold-bright), 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  .card-emoji {
+    font-size: 32px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .card-name {
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+
+  .card-name-en {
+    font-size: 11px;
+    color: var(--gold-mid);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: rgba(250,236,210,0.6);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-price {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-bright);
+    font-weight: 700;
+  }
+
+  .card-price span {
+    font-size: 12px;
+    color: var(--gold-mid);
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+
+  .add-btn {
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+    color: var(--brown-deepest);
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .add-btn:hover { transform: scale(1.12); box-shadow: 0 4px 12px rgba(212,160,23,0.4); }
+
+  .qty-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .qty-ctrl button {
+    background: var(--gold-deep);
+    color: var(--cream);
+    border: none;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+  .qty-ctrl button:hover { background: var(--gold-bright); color: var(--brown-deepest); }
+  .qty-display {
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    color: var(--gold-light);
+    min-width: 24px;
+    text-align: center;
+  }
+
+  /* ─── CART DRAWER ─── */
+  .cart-btn-fixed {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-deep) 100%);
+    color: var(--brown-deepest);
+    border: none;
+    padding: 14px 36px;
+    border-radius: 2px;
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 0 24px rgba(212,160,23,0.3);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s;
+    letter-spacing: 1px;
+  }
+  .cart-btn-fixed:hover { transform: translateX(-50%) translateY(-2px); }
+  .cart-badge {
+    background: var(--brown-deepest);
+    color: var(--gold-bright);
+    border-radius: 50%;
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* ─── MODAL OVERLAY ─── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal-panel {
+    background: linear-gradient(180deg, var(--brown-mid) 0%, var(--brown-deep) 100%);
+    border: 1px solid rgba(212,160,23,0.3);
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px 24px 40px;
+    position: relative;
+  }
+
+  .modal-handle {
+    width: 40px; height: 4px;
+    background: var(--gold-deep);
+    border-radius: 2px;
+    margin: 0 auto 24px;
+  }
+
+  .modal-title {
+    font-family: 'Amiri', serif;
+    font-size: 26px;
+    color: var(--gold-bright);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .modal-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 20px;
+  }
+  .modal-divider::before, .modal-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to var(--d, right), var(--gold-deep), transparent);
+  }
+  .modal-divider::before { --d: right; }
+  .modal-divider::after { --d: left; }
+  .modal-divider-gem {
+    width: 8px; height: 8px;
+    background: var(--gold-bright);
+    transform: rotate(45deg);
+  }
+
+  /* ─── ORDER ITEMS ─── */
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(184,134,11,0.15);
+    gap: 12px;
+  }
+
+  .order-item-info { flex: 1; }
+  .order-item-name {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+  .order-item-price {
+    font-size: 13px;
+    color: var(--gold-mid);
+  }
+
+  .order-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .order-item-qty button {
+    background: rgba(184,134,11,0.2);
+    color: var(--gold-bright);
+    border: 1px solid rgba(184,134,11,0.3);
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .order-item-qty button:hover { background: var(--gold-deep); }
+  .order-item-subtotal {
+    font-family: 'Amiri', serif;
+    font-size: 16px;
+    color: var(--gold-light);
+    min-width: 60px;
+    text-align: left;
+  }
+
+  .order-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0;
+    margin-top: 8px;
+    border-top: 1px solid rgba(212,160,23,0.3);
+  }
+  .total-label {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-mid);
+  }
+  .total-amount {
+    font-family: 'Amiri', serif;
+    font-size: 24px;
+    color: var(--gold-bright);
+    font-weight: 700;
+  }
+
+  /* ─── TABLE INPUT ─── */
+  .table-section {
+    background: rgba(26,15,0,0.5);
+    border: 1px solid rgba(184,134,11,0.2);
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .table-section label {
+    display: block;
+    font-size: 14px;
+    color: var(--gold-mid);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  .table-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .table-input {
+    flex: 1;
+    background: rgba(92,54,0,0.3);
+    border: 1px solid rgba(184,134,11,0.3);
+    border-radius: 2px;
+    padding: 12px 16px;
+    color: var(--gold-light);
+    font-family: 'Amiri', serif;
+    font-size: 22px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s;
+    max-width: 120px;
+  }
+  .table-input:focus { border-color: var(--gold-bright); box-shadow: 0 0 0 3px rgba(212,160,23,0.1); }
+  .table-input::placeholder { color: rgba(184,134,11,0.3); font-size: 16px; }
+
+  .place-order-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold-deep) 100%);
+    color: var(--brown-deepest);
+    border: none;
+    padding: 16px;
+    border-radius: 2px;
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    transition: opacity 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .place-order-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  .place-order-btn:hover::before { left: 100%; }
+  .place-order-btn:hover { transform: translateY(-1px); }
+  .place-order-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* ─── QR MODAL ─── */
+  .qr-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 300;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .qr-overlay.open { display: flex; }
+
+  .qr-panel {
+    background: linear-gradient(160deg, var(--brown-mid), var(--brown-deepest));
+    border: 1px solid rgba(212,160,23,0.4);
+    border-radius: 8px;
+    padding: 36px 28px;
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.8), 0 0 40px rgba(212,160,23,0.1);
+  }
+
+  .qr-title {
+    font-family: 'Amiri', serif;
+    font-size: 28px;
+    color: var(--gold-bright);
+    margin-bottom: 4px;
+  }
+  .qr-subtitle {
+    font-size: 13px;
+    color: var(--gold-mid);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  .qr-code-wrapper {
+    background: white;
+    padding: 16px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 0 0 4px var(--gold-bright), 0 0 0 8px var(--brown-rich);
+  }
+
+  .qr-order-summary {
+    background: rgba(26,15,0,0.6);
+    border: 1px solid rgba(184,134,11,0.2);
+    border-radius: 4px;
+    padding: 14px;
+    margin-bottom: 20px;
+    text-align: right;
+  }
+  .qr-order-summary .qr-table-num {
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+  }
+  .qr-order-items {
+    font-size: 12px;
+    color: rgba(250,236,210,0.6);
+    line-height: 1.8;
+  }
+  .qr-total-line {
+    font-family: 'Amiri', serif;
+    font-size: 18px;
+    color: var(--gold-bright);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(184,134,11,0.2);
+  }
+
+  .qr-close-btn {
+    background: transparent;
+    border: 1px solid rgba(184,134,11,0.4);
+    color: var(--gold-mid);
+    padding: 10px 24px;
+    border-radius: 2px;
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .qr-close-btn:hover { background: rgba(184,134,11,0.15); color: var(--gold-bright); }
+
+  .close-modal-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: transparent;
+    border: 1px solid rgba(184,134,11,0.3);
+    color: var(--gold-mid);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .close-modal-btn:hover { background: rgba(184,134,11,0.15); color: var(--gold-bright); }
+
+  .empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(184,134,11,0.4);
+    font-size: 15px;
+  }
+  .empty-cart .empty-icon { font-size: 40px; margin-bottom: 10px; display: block; }
+
+  /* ─── FOOTER ORNAMENT ─── */
+  .footer-ornament {
+    text-align: center;
+    padding: 40px 0 20px;
+    color: rgba(184,134,11,0.3);
+    font-family: 'Amiri', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+  }
+
+  @media (max-width: 480px) {
+    .menu-grid { grid-template-columns: 1fr; }
+  }
+
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    background: linear-gradient(135deg, var(--gold-bright), var(--gold-deep));
+    color: var(--brown-deepest);
+    padding: 10px 24px;
+    border-radius: 2px;
+    font-weight: 700;
+    font-size: 14px;
+    z-index: 400;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .notification.show { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="page-frame">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="ornament">
+      <div class="ornament-line left"></div>
+      <div class="ornament-diamond"></div>
+      <span style="font-size:22px; color:var(--gold-bright)">✦</span>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <span class="logo-arabic">الخان</span>
+    <span class="logo-english">El Khan</span>
+    <p class="tagline">مقهى الأصالة والضيافة العربية</p>
+    <div class="ornament" style="margin-top:20px; margin-bottom:0">
+      <div class="ornament-line left"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line"></div>
+    </div>
+  </header>
+
+  <!-- CATEGORY TABS -->
+  <nav class="category-nav" id="categoryNav">
+    <button class="cat-tab active" data-cat="hot" onclick="showCat('hot',this)"><span>☕ المشروبات الساخنة</span></button>
+    <button class="cat-tab" data-cat="cold" onclick="showCat('cold',this)"><span>🧊 المشروبات الباردة</span></button>
+    <button class="cat-tab" data-cat="shisha" onclick="showCat('shisha',this)"><span>💨 الشيشة</span></button>
+    <button class="cat-tab" data-cat="food" onclick="showCat('food',this)"><span>🍽️ المأكولات</span></button>
+    <button class="cat-tab" data-cat="sweets" onclick="showCat('sweets',this)"><span>🍮 الحلويات</span></button>
+  </nav>
+
+  <!-- HOT DRINKS -->
+  <div class="menu-section visible" id="cat-hot">
+    <div class="section-title">
+      <h2>المشروبات الساخنة</h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="menu-grid" id="grid-hot"></div>
+  </div>
+
+  <!-- COLD DRINKS -->
+  <div class="menu-section" id="cat-cold">
+    <div class="section-title">
+      <h2>المشروبات الباردة</h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="menu-grid" id="grid-cold"></div>
+  </div>
+
+  <!-- SHISHA -->
+  <div class="menu-section" id="cat-shisha">
+    <div class="section-title">
+      <h2>الشيشة</h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="menu-grid" id="grid-shisha"></div>
+  </div>
+
+  <!-- FOOD -->
+  <div class="menu-section" id="cat-food">
+    <div class="section-title">
+      <h2>المأكولات</h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="menu-grid" id="grid-food"></div>
+  </div>
+
+  <!-- SWEETS -->
+  <div class="menu-section" id="cat-sweets">
+    <div class="section-title">
+      <h2>الحلويات</h2>
+      <div class="title-line"></div>
+    </div>
+    <div class="menu-grid" id="grid-sweets"></div>
+  </div>
+
+  <div class="footer-ornament">✦ ✦ ✦<br>الخان — لأن الضيافة فن</div>
+</div>
+
+<!-- CART BUTTON -->
+<button class="cart-btn-fixed" id="cartBtn" onclick="openCart()">
+  <span>عرض الطلب</span>
+  <div class="cart-badge" id="cartBadge">0</div>
+  <span id="cartTotal" style="font-size:13px"></span>
+</button>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notification"></div>
+
+<!-- CART MODAL -->
+<div class="modal-overlay" id="cartOverlay">
+  <div class="modal-panel">
+    <div class="modal-handle"></div>
+    <button class="close-modal-btn" onclick="closeCart()">✕</button>
+    <h2 class="modal-title">طلبكم</h2>
+    <div class="modal-divider"><div class="modal-divider-gem"></div></div>
+
+    <div id="cartItems"></div>
+
+    <div class="order-total" id="orderTotalRow" style="display:none">
+      <span class="total-label">الإجمالي</span>
+      <span class="total-amount" id="modalTotal"></span>
+    </div>
+
+    <div class="table-section" id="tableSect" style="display:none">
+      <label>رقم الطاولة</label>
+      <div class="table-input-row">
+        <input type="number" class="table-input" id="tableInput" placeholder="٠" min="1" max="99" />
+        <span style="color:var(--gold-mid); font-size:13px; flex:1">أدخل رقم الطاولة الخاصة بكم</span>
+      </div>
+    </div>
+
+    <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()" style="display:none">
+      إرسال الطلب وتوليد QR ✦
+    </button>
+  </div>
+</div>
+
+<!-- QR MODAL -->
+<div class="qr-overlay" id="qrOverlay">
+  <div class="qr-panel">
+    <div class="ornament" style="margin-bottom:14px">
+      <div class="ornament-line left" style="max-width:60px"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line" style="max-width:60px"></div>
+    </div>
+    <h2 class="qr-title">تأكيد الطلب</h2>
+    <p class="qr-subtitle">امسح الكود لمراجعة طلبك</p>
+    <div class="qr-code-wrapper">
+      <div id="qrCode"></div>
+    </div>
+    <div class="qr-order-summary" id="qrSummary"></div>
+    <button class="place-order-btn" onclick="closeQR()" style="margin-top:8px; font-size:16px">
+      طلب جديد ✦
+    </button>
+    <br>
+    <button class="qr-close-btn" onclick="closeQR()">إغلاق</button>
+  </div>
+</div>
+
+<script>
+// ─── MENU DATA ───
+const menu = {
+  hot: [
+    { id:'h1', emoji:'☕', name:'قهوة عربية', en:'Arabic Coffee', desc:'قهوة مطحونة بالهيل والزعفران على الطريقة الخليجية', price:18 },
+    { id:'h2', emoji:'🫖', name:'شاي كرك', en:'Karak Tea', desc:'شاي بالحليب والبهارات الهندية الفاخرة', price:16 },
+    { id:'h3', emoji:'☕', name:'قهوة تركية', en:'Turkish Coffee', desc:'قهوة مرة أو سادة أو مضبوطة حسب رغبتك', price:20 },
+    { id:'h4', emoji:'🌿', name:'نعناع بالليمون', en:'Mint & Lemon', desc:'نعناع طازج مع ليمون مغربي ساخن', price:15 },
+    { id:'h5', emoji:'🌸', name:'زهورات', en:'Herbal Blend', desc:'خلطة عشبية طبيعية من ورود وبابونج وخزامى', price:17 },
+    { id:'h6', emoji:'🍫', name:'كاكاو بالحليب', en:'Hot Chocolate', desc:'شوكولاتة بلجيكية داكنة مع رغوة الحليب', price:22 },
+  ],
+  cold: [
+    { id:'c1', emoji:'🧃', name:'عصير مانجو طازج', en:'Fresh Mango Juice', desc:'مانجو طبيعي طازج بدون إضافات', price:22 },
+    { id:'c2', emoji:'🫐', name:'سموذي التوت', en:'Berry Smoothie', desc:'توت أزرق وفراولة وتوت العليق مع عسل', price:28 },
+    { id:'c3', emoji:'🍋', name:'ليموناضة بالنعناع', en:'Mint Lemonade', desc:'ليمون طازج مع نعناع وقليل من الزهر', price:18 },
+    { id:'c4', emoji:'🥭', name:'لاسي المانجو', en:'Mango Lassi', desc:'مانجو بالزبادي والهيل — لمسة هندية أصيلة', price:24 },
+    { id:'c5', emoji:'🍵', name:'شاي مثلج بالياسمين', en:'Jasmine Iced Tea', desc:'شاي ياسمين بارد مع ماء الورد وسكر القصب', price:20 },
+    { id:'c6', emoji:'🥤', name:'موهيتو الخوخ', en:'Peach Mojito', desc:'خوخ طازج مع نعناع وصودا وكريمة', price:26 },
+  ],
+  shisha: [
+    { id:'s1', emoji:'💨', name:'تفاح مزدوج', en:'Double Apple', desc:'النكهة الكلاسيكية الأكثر طلباً', price:55 },
+    { id:'s2', emoji:'🍓', name:'فراولة بنعناع', en:'Strawberry Mint', desc:'فراولة حلوة مع برودة النعناع', price:60 },
+    { id:'s3', emoji:'🍑', name:'خوخ وورد', en:'Peach Rose', desc:'مزيج رومانسي من الخوخ وورد الطائف', price:65 },
+    { id:'s4', emoji:'🍇', name:'عنب أخضر', en:'Green Grape', desc:'عنب أخضر خفيف ومنعش', price:60 },
+    { id:'s5', emoji:'🌴', name:'جوز هند مع فانيليا', en:'Coconut Vanilla', desc:'نكهة استوائية فاخرة ناعمة', price:70 },
+    { id:'s6', emoji:'🍋', name:'ليمون بالنعناع', en:'Lemon Mint', desc:'منعش ومثالي للمساء', price:55 },
+  ],
+  food: [
+    { id:'f1', emoji:'🥗', name:'سلطة فتوش', en:'Fattoush Salad', desc:'خضار طازجة مع خبز مقرمش وصلصة الرمان', price:35 },
+    { id:'f2', emoji:'🥙', name:'ساندويش شاورما', en:'Shawarma Sandwich', desc:'دجاج مشوي بالتوابل مع ثومية وخضار', price:45 },
+    { id:'f3', emoji:'🧆', name:'فلافل خان', en:'Khan Falafel', desc:'فلافل مقرمشة محضرة بوصفة الخان السرية', price:32 },
+    { id:'f4', emoji:'🍞', name:'مشاوي مشكل', en:'Mixed Grill Platter', desc:'تشكيلة لحوم مشوية مع خبز طازج وصلصات', price:95 },
+    { id:'f5', emoji:'🫕', name:'حمص بالطحينة', en:'Classic Hummus', desc:'حمص طازج مع زيت زيتون بكر وبابريكا', price:28 },
+    { id:'f6', emoji:'🥚', name:'بيض بالمحمرة', en:'Shakshuka', desc:'بيض مطبوخ بصلصة الطماطم والبهارات', price:38 },
+  ],
+  sweets: [
+    { id:'sw1', emoji:'🍮', name:'أم علي', en:"Om Ali", desc:'حلوى مصرية بالعجينة والمكسرات والقشدة', price:35 },
+    { id:'sw2', emoji:'🍯', name:'كنافة بالجبن', en:'Kanafeh', desc:'كنافة نابلسية بالجبن الطازج وقطر العسل', price:40 },
+    { id:'sw3', emoji:'🧁', name:'لقيمات', en:'Luqaimat', desc:'كرات العسل والسمسم — حلوى الخليج الأصيلة', price:28 },
+    { id:'sw4', emoji:'🍰', name:'بسبوسة بالقشدة', en:'Basbousa', desc:'كيك السميد بالقشدة وشراب الورد', price:30 },
+    { id:'sw5', emoji:'🍫', name:'براونيز شوكولاتة', en:'Chocolate Brownie', desc:'براونيز دافئة مع آيس كريم الفانيليا', price:38 },
+    { id:'sw6', emoji:'🍬', name:'مهلبية الورد', en:'Rose Pudding', desc:'مهلبية ناعمة بماء الورد والفستق', price:32 },
+  ]
+};
+
+// ─── STATE ───
+const cart = {};
+
+// ─── RENDER MENU ───
+function renderMenus() {
+  Object.keys(menu).forEach(cat => {
+    const grid = document.getElementById('grid-' + cat);
+    menu[cat].forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'menu-card';
+      card.id = 'card-' + item.id;
+      card.innerHTML = `
+        <span class="card-emoji">${item.emoji}</span>
+        <div class="card-name">${item.name}</div>
+        <div class="card-name-en">${item.en}</div>
+        <p class="card-desc">${item.desc}</p>
+        <div class="card-footer">
+          <div class="card-price">${item.price} <span>ج.م</span></div>
+          <div id="ctrl-${item.id}">
+            <button class="add-btn" onclick="addItem('${item.id}', '${item.name}', ${item.price})">+</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  });
+}
+
+// ─── ADD / CHANGE QUANTITY ───
+function addItem(id, name, price) {
+  cart[id] = { name, price, qty: 1, id };
+  updateCtrl(id);
+  updateCartUI();
+  showNotif(`أُضيف: ${name} ✦`);
+}
+
+function changeQty(id, delta) {
+  if (!cart[id]) return;
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) {
+    delete cart[id];
+    updateCtrl(id);
+  } else {
+    updateCtrl(id);
+  }
+  updateCartUI();
+  renderCartItems();
+}
+
+function updateCtrl(id) {
+  const ctrl = document.getElementById('ctrl-' + id);
+  const allItems = Object.values(menu).flat();
+  const item = allItems.find(i => i.id === id);
+  const card = document.getElementById('card-' + id);
+
+  if (!ctrl) return;
+
+  if (cart[id]) {
+    ctrl.innerHTML = `
+      <div class="qty-ctrl">
+        <button onclick="changeQty('${id}', -1)">−</button>
+        <span class="qty-display">${cart[id].qty}</span>
+        <button onclick="changeQty('${id}', +1)">+</button>
+      </div>`;
+    if (card) card.classList.add('in-cart');
+  } else {
+    ctrl.innerHTML = `<button class="add-btn" onclick="addItem('${id}', '${item.name}', ${item.price})">+</button>`;
+    if (card) card.classList.remove('in-cart');
+  }
+}
+
+function getTotalItems() { return Object.values(cart).reduce((s, i) => s + i.qty, 0); }
+function getTotalPrice() { return Object.values(cart).reduce((s, i) => s + i.qty * i.price, 0); }
+
+function updateCartUI() {
+  const total = getTotalItems();
+  const btn = document.getElementById('cartBtn');
+  btn.style.display = total > 0 ? 'flex' : 'none';
+  document.getElementById('cartBadge').textContent = total;
+  document.getElementById('cartTotal').textContent = getTotalPrice() + ' ج.م';
+}
+
+// ─── CART MODAL ───
+function openCart() {
+  renderCartItems();
+  document.getElementById('cartOverlay').classList.add('open');
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+}
+
+function renderCartItems() {
+  const container = document.getElementById('cartItems');
+  const items = Object.values(cart);
+
+  if (items.length === 0) {
+    container.innerHTML = `<div class="empty-cart"><span class="empty-icon">☕</span>لا توجد عناصر في الطلب بعد</div>`;
+    document.getElementById('orderTotalRow').style.display = 'none';
+    document.getElementById('tableSect').style.display = 'none';
+    document.getElementById('placeOrderBtn').style.display = 'none';
+    return;
+  }
+
+  container.innerHTML = items.map(i => `
+    <div class="order-item">
+      <div class="order-item-info">
+        <div class="order-item-name">${i.name}</div>
+        <div class="order-item-price">${i.price} ج.م × ${i.qty}</div>
+      </div>
+      <div class="order-item-qty">
+        <button onclick="changeQty('${i.id}', -1)">−</button>
+        <span style="min-width:20px;text-align:center;color:var(--gold-light)">${i.qty}</span>
+        <button onclick="changeQty('${i.id}', +1)">+</button>
+      </div>
+      <div class="order-item-subtotal">${i.qty * i.price} ج.م</div>
+    </div>
+  `).join('');
+
+  document.getElementById('modalTotal').textContent = getTotalPrice() + ' ج.م';
+  document.getElementById('orderTotalRow').style.display = 'flex';
+  document.getElementById('tableSect').style.display = 'block';
+  document.getElementById('placeOrderBtn').style.display = 'block';
+}
+
+// ─── PLACE ORDER & QR ───
+function placeOrder() {
+  const tableNum = document.getElementById('tableInput').value.trim();
+  if (!tableNum || isNaN(tableNum) || +tableNum < 1) {
+    document.getElementById('tableInput').focus();
+    document.getElementById('tableInput').style.borderColor = '#e55';
+    setTimeout(() => document.getElementById('tableInput').style.borderColor = '', 1200);
+    showNotif('يرجى إدخال رقم الطاولة ✦');
+    return;
+  }
+
+  const items = Object.values(cart);
+  const total = getTotalPrice();
+
+  // Build compact order text for QR (keep short to avoid overflow)
+  const orderLines = items.map(i => `${i.id}x${i.qty}`).join(',');
+  const qrData = `ELKHAN|T${tableNum}|${orderLines}|${total}EGP`;
+
+  // Render QR
+  document.getElementById('qrCode').innerHTML = '';
+  new QRCode(document.getElementById('qrCode'), {
+    text: qrData,
+    width: 200,
+    height: 200,
+    colorDark: '#1a0f00',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.L
+  });
+
+  // Summary
+  document.getElementById('qrSummary').innerHTML = `
+    <div class="qr-table-num">🪑 طاولة رقم: ${tableNum}</div>
+    <div class="qr-order-items">${items.map(i => `${i.name} × ${i.qty}`).join(' &nbsp;•&nbsp; ')}</div>
+    <div class="qr-total-line">الإجمالي: ${total} ج.م</div>
+  `;
+
+  closeCart();
+  document.getElementById('qrOverlay').classList.add('open');
+}
+
+function closeQR() {
+  document.getElementById('qrOverlay').classList.remove('open');
+  // Reset
+  Object.keys(cart).forEach(k => {
+    delete cart[k];
+    updateCtrl(k);
+  });
+  updateCartUI();
+  document.getElementById('tableInput').value = '';
+  showNotif('شكراً لكم! طلبكم قيد التحضير ✦');
+}
+
+// ─── CATEGORY SWITCH ───
+function showCat(cat, btn) {
+  document.querySelectorAll('.menu-section').forEach(s => s.classList.remove('visible'));
+  document.getElementById('cat-' + cat).classList.add('visible');
+  document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ─── NOTIFICATION ───
+function showNotif(msg) {
+  const n = document.getElementById('notification');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 1800);
+}
+
+// ─── INIT ───
+renderMenus();
+</script>
+</body>
+</html>
